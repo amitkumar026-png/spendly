@@ -21,7 +21,7 @@
         </p>
         <div class="hero2-actions">
             <a href="{{ url_for('register') }}" class="btn-dark">Create free account</a>
-            <a href="#" class="btn-dark">See how it works</a>
+            <button type="button" class="btn-dark" id="how-it-works-btn">See how it works</button>
         </div>
     </div>
 
@@ -75,6 +75,20 @@
     </div>
 </section>
 
+<div class="modal-overlay" id="how-it-works-modal">
+    <div class="modal-box">
+        <button type="button" class="modal-close" id="how-it-works-close" aria-label="Close video">&times;</button>
+        <div class="modal-video-wrap">
+            <iframe id="how-it-works-iframe"
+                    src=""
+                    title="How Spendly works"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
 <section class="features">
     <div class="features-inner">
         <div class="feature-card">
@@ -103,4 +117,36 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var YOUTUBE_VIDEO_ID = "dQw4w9WgXcQ";
+
+        var openBtn = document.getElementById("how-it-works-btn");
+        var closeBtn = document.getElementById("how-it-works-close");
+        var overlay = document.getElementById("how-it-works-modal");
+        var iframe = document.getElementById("how-it-works-iframe");
+
+        function openModal() {
+            iframe.src = "https://www.youtube.com/embed/" + YOUTUBE_VIDEO_ID + "?autoplay=1";
+            overlay.classList.add("is-open");
+        }
+
+        function closeModal() {
+            overlay.classList.remove("is-open");
+            iframe.src = "about:blank";
+        }
+
+        openBtn.addEventListener("click", openModal);
+        closeBtn.addEventListener("click", closeModal);
+
+        overlay.addEventListener("click", function (event) {
+            if (event.target === overlay) {
+                closeModal();
+            }
+        });
+    })();
+</script>
 {% endblock %}
